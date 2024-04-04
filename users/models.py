@@ -2,13 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
-
+    
 
 
 class Books(models.Model):
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=5000)
     image = models.ImageField(upload_to='books_images/', blank=True, null=True)
     language = models.ForeignKey('Language', on_delete=models.CASCADE)
 

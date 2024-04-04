@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="features">
+		<div class="container">
+			<h3 class="m_3">{{ category}}</h3>
+			<div class="close_but"><i class="close1"> </i></div>
+			  <div class="row">
+				{% for book in books %}
+					<div class="col-md-3 top_box">
+                      <div class="view view-ninth"><a href="single.html">
+                        <img src="{{ book.image.url }}" class="img-responsive" alt=""/>
+                        <div class="mask mask-1"> </div>
+                        <div class="mask mask-2"> </div>
+                          <div class="content">
+                            <h2>{{ book.language.name }}</h2>
+                            <a href="{% url 'users:detail' book.pk %}" class="btn btn-outline-warning">Batafsil</a>
+                          </div>
+                       </a>
+                      </div>
+                      <h4 class="m_4"><a href="#">{{ book.name }}</a></h4>
+                      <p class="m_5">{{ book.description|truncatewords:5 }}</p>
+                </div>
+				{% endfor %}
+
+			</div>
+		 </div>
+    </div>
+{% endblock %}

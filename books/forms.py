@@ -57,3 +57,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+
+class CommentForm(forms.Form):
+    comment_text = forms.CharField(widget=forms.Textarea(attrs={'rows':4}))
+    stars_given = forms.IntegerField(max_value=5, min_value=1)

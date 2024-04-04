@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+<head>
+<title>Free Snow Bootstrap Website Template | Home :: w3layouts</title>
+<link href="{% static 'books/css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+<link href="{% static 'books/css/style.css' %}" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script src="{% static 'books/js/jquery.min.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!--<script src="js/jquery.easydropdown.js"></script>-->
+<!--start slider -->
+<link rel="stylesheet" href="{% static 'books/css/fwslider.css' %}" media="all">
+<script src="{% static 'books/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'books/js/fwslider.js' %}"></script>
+<!--end slider -->
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown img.flag").addClass("flagvisibility");
+
+            $(".dropdown dt a").click(function() {
+                $(".dropdown dd ul").toggle();
+            });
+
+            $(".dropdown dd ul li a").click(function() {
+                var text = $(this).html();
+                $(".dropdown dt a span").html(text);
+                $(".dropdown dd ul").hide();
+                $("#result").html("Selected value is: " + getSelectedValue("sample"));
+            });
+
+            function getSelectedValue(id) {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $(document).bind('click', function(e) {
+                var $clicked = $(e.target);
+                if (! $clicked.parents().hasClass("dropdown"))
+                    $(".dropdown dd ul").hide();
+            });
+
+
+            $("#flagSwitcher").click(function() {
+                $(".dropdown img.flag").toggleClass("flagvisibility");
+            });
+        });
+     </script>
+</head>
+<body>
+	<div class="header">
+		<div class="container">
+			<div class="row">
+			  <div class="col-md-12">
+				 <div class="header-left">
+					 <div class="logo">
+						<a href="index.html"><img src="images/logo.png" alt=""/></a>
+					 </div>
+					 <div class="menu">
+						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
+						    <ul class="nav" id="nav">
+						    	<li><a href="{% url 'landing_page' %}">Bosh sahifa</a></li>
+						    	<div class="dropdown">
+                                  <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Kategoriya
+                                  </a>
+                                  <ul class="dropdown-menu" style="background-color: black !important;">
+                                    {% for lang in langs %}
+                                    	<li><a class="dropdown-item" href="{% url 'books:category' lang.id %}">{{ lang.name }}</a></li>
+                                    {% endfor %}
+
+                                  </ul>
+                                </div>
+							</ul>
+							<script type="text/javascript" src="{% static 'books/js/responsive-nav.js' %}"></script>
+				    </div>
+	    		    <div class="clear"></div>
+	    	    </div>
+	            <div class="dropdown">
+                  <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if user.is_authenticated %}
+                    	{{ user.username }}
+                    {% else %}
+                        User
+                  {% endif %}
+                  </a>
+                  <ul class="dropdown-menu" style="background-color: black !important;">
+                       {% if user.is_authenticated %}
+                       	     <li><a class="dropdown-item" href="{% url 'books:profile' %}">Profile</a></li>
+                       	     <li><a class="dropdown-item" href="{% url 'books:logout' %}">Logout</a></li>
+                       {% else %}
+                            <li><a class="dropdown-item" href="{% url 'books:login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'books:register' %}">Registratsiya</a></li>
+                      {% endif %}
+                  </ul>
+                </div>
+	      </div>
+		 </div>
+	    </div>
+	</div>
+        {% block content %}
+        	
+        {% endblock %}
+   <div class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<ul class="footer_box">
+							<h4>Products</h4>
+							<li><a href="#">Mens</a></li>
+							<li><a href="#">Womens</a></li>
+							<li><a href="#">Youth</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<ul class="footer_box">
+							<h4>About</h4>
+							<li><a href="#">Careers and internships</a></li>
+							<li><a href="#">Sponserships</a></li>
+							<li><a href="#">team</a></li>
+							<li><a href="#">Catalog Request/Download</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<ul class="footer_box">
+							<h4>Customer Support</h4>
+							<li><a href="#">Contact Us</a></li>
+							<li><a href="#">Shipping and Order Tracking</a></li>
+							<li><a href="#">Easy Returns</a></li>
+							<li><a href="#">Warranty</a></li>
+							<li><a href="#">Replacement Binding Parts</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<ul class="footer_box">
+							<h4>Newsletter</h4>
+							<div class="footer_search">
+				    		   <form>
+				    			<input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
+				    			<input type="submit" value="Go">
+				    		   </form>
+					        </div>
+							<ul class="social">
+							  
+							  <li class="twitter"><a href="#"><span> </span>abdulaziz_o2o4</a></li>
+							  <li class="instagram"><a href="#"><span> </span>abdulaziz_o2o4</a></li>
+							  <li class="youtube"><a href="#"><span> </span>abdulaziz_o2o4</a></li>
+						    </ul>
+
+						</ul>
+					</div>
+				</div>
+				<div class="row footer_bottom">
+				    <div class="copy">
+			           <p>© 2024 Template by outor >> Abdulaziz</p>
+		            </div>
+					  <dl id="sample" class="dropdown">
+				        <dt><a href="#"><span>Change Region</span>Uzbekistan</a></dt>
+				        <dd>
+				            <ul>
+				                <li><a href="#">Australia<img class="flag" src="" alt="" /><span class="value">AS</span></a></li>
+				                <li><a href="#">Sri Lanka<img class="flag" src="images/srl.png" alt="" /><span class="value">SL</span></a></li>
+				                <li><a href="#">Newziland<img class="flag" src="images/nz.png" alt="" /><span class="value">NZ</span></a></li>
+				                <li><a href="#">Pakistan<img class="flag" src="images/pk.png" alt="" /><span class="value">Pk</span></a></li>
+				                <li><a href="#">United Kingdom<img class="flag" src="images/uk.png" alt="" /><span class="value">UK</span></a></li>
+				                <li><a href="#">United States<img class="flag" src="images/us.png" alt="" /><span class="value">US</span></a></li>
+				            </ul>
+				         </dd>
+	   				  </dl>
+   				</div>
+			</div>
+		</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>	
+</html>

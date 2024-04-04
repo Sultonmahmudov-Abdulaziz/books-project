@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<div class="container">
+    <div class="row p-5">
+        <div class="col-md-5">
+            <div class="project-info-box mt-0">
+                <h5>Kitob haqida batafsil</h5>
+                <p class="mb-0">{{ book.description }}</p>
+            </div>
+
+            <div class="project-info-box">
+              <p><b>Client:</b> CUPCAKE CO</p>
+              <p><b>Date:</b> 14.02.2020</p>
+              <p><b>Designer:</b>{{ user.first_name }}</p>
+              <p><b>Tools:</b> Illustrator</p>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <img src="{{book.image.url}}" alt="project-image" class="rounded">
+            <div class="project-info-box">
+                <p><b>Kategoriya:</b> {{ book.language.name }}</p>
+                <p><b>Skills:</b> Illustrator</p>
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
+    </div>
+</div>
+    <section style="background-color: #f7f6f6;">
+  <div class="container my-5 py-5 text-dark">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 col-lg-10 col-xl-8">
+         <div class="forma">
+              <form action="{% url 'users:add_comment' book.id %}" method="post" class="commentform">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <button type="submit" class="btn btn-success">Qoldirish</button>
+          </form>
+         </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="text-dark mb-0">Izohlar ({{ comments.count }})</h4>
+        </div>
+
+       {% for comment in comments %}
+       	     <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-start">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png" alt="avatar" width="40"
+                height="40" />
+              <div class="w-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h6 class="text-primary fw-bold mb-0">
+                      {{ comment.user.username }}
+                    <span class="text-dark ms-2">{{ comment.comment_text }}</span>
+                  </h6>
+                  <p class="mb-0">2 days ago</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-row">
+                    <i class="fas fa-star text-warning me-2"></i>
+                    <p>{{ comment.stars_given }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       {% endfor %}
+
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

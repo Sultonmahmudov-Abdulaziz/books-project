@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from .forms import RegisterForm,LoginForm
+from users.models import Language, Books
+from .forms import RegisterForm,LoginForm,ProfileUpdateForm
 from django.contrib import messages 
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -61,3 +62,31 @@ class LogoutView(LoginRequiredMixin,View):
         messages.success(request,"Siz muvafaqiyatli Logout qildingiz")
 
         return redirect('landing_page')
+    
+
+class ProfileUpdateView(LoginRequiredMixin,View):
+
+    def get(self,request):
+        form = ProfileUpdateForm(instance=request.user)
+        return render(request,template_name='books/profile.html',context={'form':form})
+    
+
+    def post(self, request):
+        form = ProfileUpdateForm(data=request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('landing_page')
+        
+        return render(request,template_name='books/profile.html',context={'form':form})
+
+def category(request, id):
+    category = Language.objects.get(pk=id)
+    books = Books.objects.filter(language=category)
+
+    data = {
+        'books': books,
+        "category": category,
+    }
+    return render(request, 'books/category.html', context=data)
+
